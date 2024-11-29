@@ -5,6 +5,8 @@ VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService", "apps\UserProfileService\UserProfileService.csproj", "{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentManagementService", "apps\ContentManagementService\ContentManagementService.csproj", "{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,8 +17,15 @@ Global
 		{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7AF00F8D-7A0F-417F-8350-8B3764334678}
 	EndGlobalSection
 EndGlobal
