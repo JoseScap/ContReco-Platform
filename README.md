@@ -1,4 +1,3 @@
-```markdown
 # **Content Recommendation Platform**
 
 ## **Project Overview**
