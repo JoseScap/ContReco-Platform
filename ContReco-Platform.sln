@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.35122.118
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService", "apps\UserProfileService\UserProfileService.csproj", "{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UserProfileService", "apps\UserProfileService\UserProfileService.csproj", "{7E9C48BE-DF94-4B6E-8365-D1ACD66ABB0E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContentManagementService", "apps\ContentManagementService\ContentManagementService.csproj", "{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ContentManagementService", "apps\ContentManagementService\ContentManagementService.csproj", "{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UserProfileService.Tests", "tests\UserProfileService.Tests\UserProfileService.Tests.csproj", "{4924C77E-ECDB-45FE-A168-3E9E0602AAD1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,6 +23,10 @@ Global
 		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6D48A7C-ABDB-4ED0-A6D5-3248AD216488}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4924C77E-ECDB-45FE-A168-3E9E0602AAD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4924C77E-ECDB-45FE-A168-3E9E0602AAD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4924C77E-ECDB-45FE-A168-3E9E0602AAD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4924C77E-ECDB-45FE-A168-3E9E0602AAD1}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
