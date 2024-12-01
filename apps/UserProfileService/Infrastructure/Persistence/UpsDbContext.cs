@@ -6,7 +6,7 @@ namespace UPS.Infrastructure.Persistence;
 public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
-    public DbSet<UserPreferences> Preferences { get; set; }
+    public DbSet<Preference> Preferences { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -54,13 +54,16 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
             
         });
 
-        modelBuilder.Entity<UserPreferences>(x =>
+        modelBuilder.Entity<Preference>(x =>
         {
             // PKs, FKs and indexes
             x.HasKey(x => x.Id);
+            x.HasIndex(x => x.Tag)
+                .IsUnique();
 
-            x.Property(x => x.Tags)
-                .IsRequired(false);
+            // Simple props
+            x.Property(x => x.Tag)
+                .IsRequired();
 
             // Timestamps
             x.Property(x => x.CreatedDate)
@@ -73,5 +76,25 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
                 .HasColumnType("date")
                 .ValueGeneratedOnAddOrUpdate();
         });
+
+        //modelBuilder.Entity<UserPreferences>(x =>
+        //{
+        //    // PKs, FKs and indexes
+        //    x.HasKey(x => x.Id);
+
+        //    x.Property(x => x.Tags)
+        //        .IsRequired(false);
+
+        //    // Timestamps
+        //    x.Property(x => x.CreatedDate)
+        //        .IsRequired()
+        //        .HasDefaultValueSql("CURRENT_TIMESTAMP")
+        //        .HasColumnType("date");
+        //    x.Property(x => x.ModifiedDate)
+        //        .IsRequired()
+        //        .HasDefaultValueSql("CURRENT_TIMESTAMP")
+        //        .HasColumnType("date")
+        //        .ValueGeneratedOnAddOrUpdate();
+        //});
     }
 }
