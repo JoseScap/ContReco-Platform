@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using UPS.Domain.Entities;
+using Libs.SK.Domain.Entities;
 
 namespace UPS.Infrastructure.Persistence;
 
