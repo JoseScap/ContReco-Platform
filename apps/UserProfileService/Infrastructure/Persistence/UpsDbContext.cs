@@ -6,6 +6,8 @@ namespace UPS.Infrastructure.Persistence;
 public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(options)
 {
     public DbSet<User> Users { get; set; }
+    public DbSet<Preference> Preferences { get; set; }
+    public DbSet<UserPreferences> UserPreferences { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -13,7 +15,14 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
 
         modelBuilder.Entity<User>(x =>
         {
+            // PKs, FKs and indexes
             x.HasKey(x => x.Id);
+            x.HasIndex(x => x.UserName)
+                .IsUnique();
+            x.HasIndex(x => x.Email)
+                .IsUnique();
+
+            // Simple props
             x.Property(x => x.FirstName)
                 .IsRequired()
                 .HasMaxLength(50);
@@ -32,6 +41,8 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
             x.Property(x => x.Birthday)
                 .IsRequired()
                 .HasColumnType("date");
+
+            // Timestamps
             x.Property(x => x.CreatedDate)
                 .IsRequired()
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
@@ -41,10 +52,55 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
                 .HasDefaultValueSql("CURRENT_TIMESTAMP")
                 .HasColumnType("date")
                 .ValueGeneratedOnAddOrUpdate();
-            x.HasIndex(x => x.UserName)
+            
+        });
+
+        modelBuilder.Entity<Preference>(x =>
+        {
+            // PKs, FKs and indexes
+            x.HasKey(x => x.Id);
+            x.HasIndex(x => x.Tag)
                 .IsUnique();
-            x.HasIndex(x => x.Email)
+
+            // Simple props
+            x.Property(x => x.Tag)
+                .IsRequired();
+
+            // Timestamps
+            x.Property(x => x.CreatedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date");
+            x.Property(x => x.ModifiedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date")
+                .ValueGeneratedOnAddOrUpdate();
+        });
+
+        modelBuilder.Entity<UserPreferences>(x =>
+        {
+            // PKs, FKs and indexes
+            x.HasKey(x => x.Id);
+            x.HasIndex(x => new { x.PreferenceId, x.UserId })
                 .IsUnique();
+            x.HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId);
+            x.HasOne(x => x.Preference)
+                .WithMany()
+                .HasForeignKey(x => x.PreferenceId);
+
+            // Timestamps
+            x.Property(x => x.CreatedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date");
+            x.Property(x => x.ModifiedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date")
+                .ValueGeneratedOnAddOrUpdate();
         });
     }
 }

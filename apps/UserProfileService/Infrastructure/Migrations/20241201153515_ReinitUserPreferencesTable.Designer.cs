@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UPS.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using UPS.Infrastructure.Persistence;
 namespace UPS.Infrastructure.Migrations
 {
     [DbContext(typeof(UpsDbContext))]
-    partial class UpsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241201153515_ReinitUserPreferencesTable")]
+    partial class ReinitUserPreferencesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -22,7 +25,7 @@ namespace UPS.Infrastructure.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
-            modelBuilder.Entity("UPS.Domain.Entities.Preference", b =>
+            modelBuilder.Entity("UPS.Domain.Entities.Preferences", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -107,59 +110,6 @@ namespace UPS.Infrastructure.Migrations
                         .IsUnique();
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("UPS.Domain.Entities.UserPreferences", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("ModifiedDate"));
-
-                    b.Property<Guid>("PreferenceId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PreferenceId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserPreferences");
-                });
-
-            modelBuilder.Entity("UPS.Domain.Entities.UserPreferences", b =>
-                {
-                    b.HasOne("UPS.Domain.Entities.Preference", "Preference")
-                        .WithMany()
-                        .HasForeignKey("PreferenceId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("UPS.Domain.Entities.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Preference");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }
