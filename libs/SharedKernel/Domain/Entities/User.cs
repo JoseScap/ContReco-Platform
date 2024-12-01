@@ -1,4 +1,6 @@
-﻿namespace Libs.SK.Domain.Entities;
+﻿using Libs.SK.Domain.Dtos.Reponses;
+
+namespace Libs.SK.Domain.Entities;
 
 public class User : BaseEntity
 {
@@ -13,7 +15,17 @@ public class User : BaseEntity
     {
     }
 
-    public User(Guid id, string firstName, string lastName, string userName, string email, string password, DateTime birthday, DateTime? createdDate, DateTime? modifiedDate)
+    public User(string firstName, string lastName, string userName, string email, string password, DateTime birthday)
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        UserName = userName;
+        Email = email;
+        Password = password;
+        Birthday = birthday;
+    }
+
+    public User(string firstName, string lastName, string userName, string email, string password, DateTime birthday, Guid id, DateTime? createdDate, DateTime? modifiedDate)
         : base (id, createdDate, modifiedDate)
     {
         FirstName = firstName;
@@ -23,4 +35,6 @@ public class User : BaseEntity
         Password = password;
         Birthday = birthday;
     }
+
+    public UserCreationResponse AsCreationResponse() => new UserCreationResponse(UserName, Email);
 }
