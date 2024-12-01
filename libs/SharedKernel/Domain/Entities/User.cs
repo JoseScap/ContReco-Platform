@@ -1,6 +1,4 @@
-﻿using Libs.SK.Domain.Entities;
-
-namespace UPS.Domain.Entities;
+﻿namespace Libs.SK.Domain.Entities;
 
 public class User : BaseEntity
 {
