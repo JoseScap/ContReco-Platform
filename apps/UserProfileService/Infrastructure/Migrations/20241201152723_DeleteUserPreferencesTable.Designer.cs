@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using UPS.Infrastructure.Persistence;
 
@@ -11,9 +12,11 @@ using UPS.Infrastructure.Persistence;
 namespace UPS.Infrastructure.Migrations
 {
     [DbContext(typeof(UpsDbContext))]
-    partial class UpsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20241201152723_DeleteUserPreferencesTable")]
+    partial class DeleteUserPreferencesTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,36 +24,6 @@ namespace UPS.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 64);
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
-
-            modelBuilder.Entity("UPS.Domain.Entities.Preferences", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("ModifiedDate"));
-
-                    b.Property<string>("Tag")
-                        .IsRequired()
-                        .HasColumnType("varchar(255)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("Tag")
-                        .IsUnique();
-
-                    b.ToTable("Preferences");
-                });
 
             modelBuilder.Entity("UPS.Domain.Entities.User", b =>
                 {
