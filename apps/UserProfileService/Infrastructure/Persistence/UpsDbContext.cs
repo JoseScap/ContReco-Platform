@@ -46,11 +46,11 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
             // Timestamps
             x.Property(x => x.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date");
             x.Property(x => x.ModifiedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date")
                 .ValueGeneratedOnAddOrUpdate();
             
@@ -70,11 +70,11 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
             // Timestamps
             x.Property(x => x.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date");
             x.Property(x => x.ModifiedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date")
                 .ValueGeneratedOnAddOrUpdate();
         });
@@ -95,11 +95,11 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
             // Timestamps
             x.Property(x => x.CreatedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date");
             x.Property(x => x.ModifiedDate)
                 .IsRequired()
-                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasDefaultValueSql("CURRENT_DATE")
                 .HasColumnType("date")
                 .ValueGeneratedOnAddOrUpdate();
         });
