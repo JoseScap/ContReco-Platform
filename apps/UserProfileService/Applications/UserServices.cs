@@ -14,9 +14,11 @@ namespace UPS.Applications
             _context = context;
         }
 
-        public async Task<UserCreationResponse> CreateUserAsync(UserCreationRequest user)
+        public async Task<UserCreationResponse> CreateUserAsync(UserCreationRequest request)
         {
-            var userToAdd = user.AsUserEntity();
+            ArgumentNullException.ThrowIfNull(request, nameof(request));
+
+            var userToAdd = request.AsUserEntity();
             var createdUser = await _context.Users.AddAsync(userToAdd);
             await _context.SaveChangesAsync();
             return userToAdd.AsCreationResponse();
