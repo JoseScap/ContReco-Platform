@@ -7,6 +7,7 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
 {
     public DbSet<User> Users { get; set; }
     public DbSet<Preference> Preferences { get; set; }
+    public DbSet<UserPreferences> UserPreferences { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -77,24 +78,29 @@ public class UpsDbContext(DbContextOptions<UpsDbContext> options) : DbContext(op
                 .ValueGeneratedOnAddOrUpdate();
         });
 
-        //modelBuilder.Entity<UserPreferences>(x =>
-        //{
-        //    // PKs, FKs and indexes
-        //    x.HasKey(x => x.Id);
+        modelBuilder.Entity<UserPreferences>(x =>
+        {
+            // PKs, FKs and indexes
+            x.HasKey(x => x.Id);
+            x.HasIndex(x => new { x.PreferenceId, x.UserId })
+                .IsUnique();
+            x.HasOne(x => x.User)
+                .WithMany()
+                .HasForeignKey(x => x.UserId);
+            x.HasOne(x => x.Preference)
+                .WithMany()
+                .HasForeignKey(x => x.PreferenceId);
 
-        //    x.Property(x => x.Tags)
-        //        .IsRequired(false);
-
-        //    // Timestamps
-        //    x.Property(x => x.CreatedDate)
-        //        .IsRequired()
-        //        .HasDefaultValueSql("CURRENT_TIMESTAMP")
-        //        .HasColumnType("date");
-        //    x.Property(x => x.ModifiedDate)
-        //        .IsRequired()
-        //        .HasDefaultValueSql("CURRENT_TIMESTAMP")
-        //        .HasColumnType("date")
-        //        .ValueGeneratedOnAddOrUpdate();
-        //});
+            // Timestamps
+            x.Property(x => x.CreatedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date");
+            x.Property(x => x.ModifiedDate)
+                .IsRequired()
+                .HasDefaultValueSql("CURRENT_TIMESTAMP")
+                .HasColumnType("date")
+                .ValueGeneratedOnAddOrUpdate();
+        });
     }
 }
