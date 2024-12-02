@@ -7,7 +7,7 @@ This platform is designed to provide content recommendations to users based on t
 
 ## **Microservices**
 
-### 1. User Profile Service
+### **1. User Profile Service**
 **Purpose**: Manages user data, preferences, and interaction history.
 
 **Responsibilities**:
