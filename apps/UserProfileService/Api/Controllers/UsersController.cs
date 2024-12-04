@@ -7,7 +7,7 @@ namespace UPS.Api.Controllers;
 
 [ApiController]
 [Route("/api/[controller]")]
-public class UsersController:ControllerBase
+public class UsersController : ControllerBase
 {
     private readonly IUserServices _userServices;
 
