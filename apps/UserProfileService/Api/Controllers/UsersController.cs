@@ -1,6 +1,6 @@
-﻿using Libs.SK.Domain.Dtos.Reponses;
-using Libs.SK.Domain.Dtos.Requests;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
+using UPS.Domain.Dtos.Requests;
+using UPS.Domain.Dtos.Responses;
 using UPS.Domain.IServices;
 
 namespace UPS.Api.Controllers;

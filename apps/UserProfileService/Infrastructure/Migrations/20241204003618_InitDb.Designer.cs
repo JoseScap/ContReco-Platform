@@ -12,8 +12,8 @@ using UPS.Infrastructure.Persistence;
 namespace UPS.Infrastructure.Migrations
 {
     [DbContext(typeof(UpsDbContext))]
-    [Migration("20241201161948_InitUserPreferencesMNTable")]
-    partial class InitUserPreferencesMNTable
+    [Migration("20241204003618_InitDb")]
+    partial class InitDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,6 +25,21 @@ namespace UPS.Infrastructure.Migrations
 
             MySqlModelBuilderExtensions.AutoIncrementColumns(modelBuilder);
 
+            modelBuilder.Entity("PreferenceUser", b =>
+                {
+                    b.Property<Guid>("PreferencesId")
+                        .HasColumnType("char(36)");
+
+                    b.Property<Guid>("UsersId")
+                        .HasColumnType("char(36)");
+
+                    b.HasKey("PreferencesId", "UsersId");
+
+                    b.HasIndex("UsersId");
+
+                    b.ToTable("PreferenceUser");
+                });
+
             modelBuilder.Entity("UPS.Domain.Entities.Preference", b =>
                 {
                     b.Property<Guid>("Id")
@@ -33,12 +48,12 @@ namespace UPS.Infrastructure.Migrations
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<DateTime>("ModifiedDate")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("date")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("ModifiedDate"));
@@ -62,11 +77,11 @@ namespace UPS.Infrastructure.Migrations
                         .HasColumnType("char(36)");
 
                     b.Property<DateTime>("Birthday")
-                        .HasColumnType("date");
+                        .HasColumnType("datetime");
 
                     b.Property<DateTime>("CreatedDate")
                         .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     b.Property<string>("Email")
@@ -86,7 +101,7 @@ namespace UPS.Infrastructure.Migrations
 
                     b.Property<DateTime>("ModifiedDate")
                         .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("date")
+                        .HasColumnType("datetime")
                         .HasDefaultValueSql("CURRENT_TIMESTAMP");
 
                     MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("ModifiedDate"));
@@ -112,57 +127,19 @@ namespace UPS.Infrastructure.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("UPS.Domain.Entities.UserPreferences", b =>
+            modelBuilder.Entity("PreferenceUser", b =>
                 {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("char(36)");
-
-                    b.Property<DateTime>("CreatedDate")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    b.Property<DateTime>("ModifiedDate")
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("date")
-                        .HasDefaultValueSql("CURRENT_TIMESTAMP");
-
-                    MySqlPropertyBuilderExtensions.UseMySqlComputedColumn(b.Property<DateTime>("ModifiedDate"));
-
-                    b.Property<Guid>("PreferenceId")
-                        .HasColumnType("char(36)");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("char(36)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("UserId");
-
-                    b.HasIndex("PreferenceId", "UserId")
-                        .IsUnique();
-
-                    b.ToTable("UserPreferences");
-                });
-
-            modelBuilder.Entity("UPS.Domain.Entities.UserPreferences", b =>
-                {
-                    b.HasOne("UPS.Domain.Entities.Preference", "Preference")
+                    b.HasOne("UPS.Domain.Entities.Preference", null)
                         .WithMany()
-                        .HasForeignKey("PreferenceId")
+                        .HasForeignKey("PreferencesId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("UPS.Domain.Entities.User", "User")
+                    b.HasOne("UPS.Domain.Entities.User", null)
                         .WithMany()
-                        .HasForeignKey("UserId")
+                        .HasForeignKey("UsersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.Navigation("Preference");
-
-                    b.Navigation("User");
                 });
 #pragma warning restore 612, 618
         }

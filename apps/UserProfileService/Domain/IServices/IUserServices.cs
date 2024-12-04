@@ -1,5 +1,5 @@
-﻿using Libs.SK.Domain.Dtos.Reponses;
-using Libs.SK.Domain.Dtos.Requests;
+﻿using UPS.Domain.Dtos.Requests;
+using UPS.Domain.Dtos.Responses;
 
 namespace UPS.Domain.IServices;
 

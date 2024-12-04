@@ -1,7 +1,7 @@
-﻿using Libs.SK.Domain.Entities;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
+using UPS.Domain.Entities;
 
-namespace Libs.SK.Domain.Dtos.Requests;
+namespace UPS.Domain.Dtos.Requests;
 
 public class UserCreationRequest
 {

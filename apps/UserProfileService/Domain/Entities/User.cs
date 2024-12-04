@@ -1,6 +1,7 @@
-﻿using Libs.SK.Domain.Dtos.Reponses;
+﻿using Libs.SK.Domain.Entities;
+using UPS.Domain.Dtos.Responses;
 
-namespace Libs.SK.Domain.Entities;
+namespace UPS.Domain.Entities;
 
 public class User : BaseEntity
 {
@@ -10,10 +11,9 @@ public class User : BaseEntity
     public string Email { get; set; }
     public string Password { get; set; }
     public DateTime Birthday { get; set; }
+    public IList<Preference> Preferences { get; set; } = new List<Preference>();
 
-    public User()
-    {
-    }
+    public User() { }
 
     public User(string firstName, string lastName, string userName, string email, string password, DateTime birthday)
     {

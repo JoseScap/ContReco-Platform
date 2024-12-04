@@ -1,10 +1,10 @@
-﻿using Libs.SK.Domain.Dtos.Requests;
-using Libs.SK.Domain.Entities;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SharedTesting.Extensions;
 using UPS.Applications;
 using UPS.Domain.IServices;
+using UPS.Domain.Dtos.Requests;
+using UPS.Domain.Entities;
 using UPS.Infrastructure.Persistence;
 
 namespace UserProfileService.Tests.UnitTest.Applications.Services;
