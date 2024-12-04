@@ -6,6 +6,9 @@
 trigger:
 - master
 
+pool:
+  vmImage: 'Azure pipelines'
+
 variables:
   solution: '**/*.sln'
   buildPlatform: 'Any CPU'
