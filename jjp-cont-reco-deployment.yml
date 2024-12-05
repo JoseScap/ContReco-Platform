@@ -1,0 +1,96 @@
+# ASP.NET
+# Build and test ASP.NET projects.
+# Add steps that publish symbols, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/apps/aspnet/build-aspnet-4
+
+parameters:
+  - name: Proyecto
+    type: string
+    displayName: 'Seleccione proyecto'
+    default: UserProfileService
+    values:
+    - UserProfileService
+    - ContentManagementService
+
+trigger: none
+
+variables:
+  planAndAppName: JJP-CONT-RECO-${{ parameters.Proyecto }}
+  resourceGroup: jjpuente4
+  appCsprojPath: apps/${{ parameters.Proyecto }}/${{ parameters.Proyecto }}.csproj
+  testCsprojPath: tests/${{ parameters.Proyecto }}.Tests/${{ parameters.Proyecto }}.Tests.csproj
+
+
+jobs:
+- job: Infrastructure
+  displayName: Set Up Infrastructure
+  pool:
+    name: Windows
+  steps:
+  - task: AzureCLI@2
+    displayName: Validate And Create Infrastructure
+    inputs:
+      azureSubscription: 'Azure Connection'
+      scriptType: 'ps'
+      scriptLocation: 'inlineScript'
+      inlineScript: |
+        $planAndAppName = "$(planAndAppName)"
+        $resourceGroup = "$(resourceGroup)"
+
+        Write-Output "Checking if App Service Plan '$planAndAppName' exists in resource group '$resourceGroup'."
+        $planExists = az appservice plan list -g $resourceGroup --query "[].name" -o tsv | Select-String -Patter "$planAndAppName"
+
+        if ($planExists) {
+          Write-Output "App Service Plan '$planAndAppName' already exists in resource group '$resourceGroup'."
+        } else {
+          Write-Output "App Service Plan '$planAndAppName' does not exist. Creating it."
+          az appservice plan create -n $planAndAppName -g $resourceGroup --sku B1
+          Write-Output "App Service Plan '$planAndAppName' created successfully."
+        }
+
+        Write-Output "Checking if Web App '$planAndAppName' exists in resource group '$resourceGroup'."
+        $webAppExists = az webapp list -g $resourceGroup --query "[].name" -o tsv | Select-String -Patter "$planAndAppName"
+
+        if ($webAppExists) {
+          Write-Output "Web App '$planAndAppName' already exists in resource group '$resourceGroup'."
+        } else {
+          Write-Output "Web App '$planAndAppName' does not exist. Creating it."
+          az webapp create -n $planAndAppName -p $planAndAppName -g $resourceGroup
+          Write-Output "Web App '$planAndAppName' created successfully."
+        }
+
+- job: Deployment
+  displayName: Build, Test and Deploy
+  dependsOn:
+  - Infrastructure
+  pool:
+    name: Windows
+  steps:
+  - task: DotNetCoreCLI@2
+    displayName: Restore projects
+    inputs:
+      command: 'restore'
+      projects: |
+        $(appCsprojPath)
+      feedsToUse: 'select'
+  - task: DotNetCoreCLI@2
+    displayName: Build project
+    inputs:
+      command: 'build'
+      projects: $(appCsprojPath)
+      arguments: '--no-restore'
+  - task: DotNetCoreCLI@2
+    displayName: Publish project
+    inputs:
+      command: 'publish'
+      projects: $(appCsprojPath)
+      publishWebProjects: true
+  - task: AzureRmWebAppDeployment@4
+    displayName: Deploy project
+    inputs:
+      ConnectionType: 'AzureRM'
+      azureSubscription: 'Azure Connection'
+      appType: 'webApp'
+      WebAppName: '$(planAndAppName)'
+      packageForLinux: '$(System.DefaultWorkingDirectory)/apps/${{ parameters.Proyecto }}/bin/Release/**/*.zip'
+    
