@@ -7,5 +7,5 @@ namespace CMS.Controllers;
 public class HealthController : ControllerBase
 {
     [HttpGet("[action]")]
-    public string Ping() => "Pong";
+    public string Ping() => "CMS Pong";
 }
